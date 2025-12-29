@@ -3,15 +3,15 @@ package io.nexum.channel.deserializers.helpers;
 import io.nexum.core.services.HelperDeserializerService;
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.HelperDeserializer;
-import io.nexum.render.GraphicsInstructionsConsumer;
-import io.nexum.render.instructions.CreateGraphicsInstruction;
+import io.nexum.render.RenderContextConsumer;
+import io.nexum.render.instructions.CreateSubContextInstruction;
 import org.jetbrains.annotations.NotNull;
 
-public class CreateGraphicsInstructionDeserializer implements HelperDeserializer<CreateGraphicsInstruction> {
+public class CreateGraphicsInstructionDeserializer implements HelperDeserializer<CreateSubContextInstruction> {
     @Override
-    public @NotNull CreateGraphicsInstruction deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final GraphicsInstructionsConsumer consumer = HelperDeserializerService.getInstance().deserialize(friendlyBuffer);
-        return new CreateGraphicsInstruction(consumer);
+    public @NotNull CreateSubContextInstruction deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
+        final RenderContextConsumer consumer = HelperDeserializerService.getInstance().deserialize(friendlyBuffer);
+        return new CreateSubContextInstruction(consumer);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class CreateGraphicsInstructionDeserializer implements HelperDeserializer
     }
 
     @Override
-    public @NotNull Class<CreateGraphicsInstruction> getObjectClazz() {
-        return CreateGraphicsInstruction.class;
+    public @NotNull Class<CreateSubContextInstruction> getObjectClazz() {
+        return CreateSubContextInstruction.class;
     }
 }

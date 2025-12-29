@@ -1,3 +1,4 @@
+import 'package:nexum_core/helpers/logger.dart';
 import 'package:nexum_core/material/colors.dart';
 import 'package:nexum_core/material/get_child_paint_command.dart';
 import 'package:nexum_core/material/paint_command_recorder.dart';

@@ -1,6 +1,5 @@
 package io.nexum.channel.handlers;
 
-import io.nexum.Nexum;
 import io.nexum.material.TextMetrics;
 import io.nexum.models.Size;
 import io.nexum.channel.PacketHandler;
@@ -15,7 +14,7 @@ import java.awt.image.BufferedImage;
 public class RequestTextMetricsPacketHandler implements PacketHandler<RequestTextMetricsPacket> {
     @Override
     public void handle(@NotNull RequestTextMetricsPacket packet) {
-        final BufferedImage dummy = new BufferedImage(1, 1, Nexum.getInstance().getImageType());
+        final BufferedImage dummy = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
         final Graphics2D gDummy = dummy.createGraphics();
 
         gDummy.setFont(new Font("Arial", Font.BOLD, packet.getFontSize()));

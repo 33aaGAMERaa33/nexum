@@ -8,7 +8,6 @@ import io.nexum.events.PointerMoveEvent;
 import io.nexum.models.Offset;
 import io.nexum.models.Size;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,11 +17,16 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 public class NexumWindow extends JFrame {
-    private @Nullable BufferedImage currentImage;
+    private final BufferedImage frame;
     private final RenderPanel panel;
 
     public NexumWindow(@NotNull Size screenSize) {
         this.panel = new RenderPanel();
+
+        this.frame = new BufferedImage(
+                screenSize.getWidth(), screenSize.getHeight(),
+                BufferedImage.TYPE_INT_ARGB_PRE
+        );
 
         this.setTitle("Nexum");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,11 +44,14 @@ public class NexumWindow extends JFrame {
         this.setVisible(true);
     }
 
-    public void setImage(BufferedImage image) {
-        SwingUtilities.invokeLater(() -> {
-            this.currentImage = image;
-            this.panel.repaint();
-        });
+    @Override
+    public void repaint() {
+        super.repaint();
+        this.panel.repaint();
+    }
+
+    public BufferedImage getFrame() {
+        return frame;
     }
 
     private class RenderPanel extends JPanel {
@@ -92,10 +99,10 @@ public class NexumWindow extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            if(currentImage != null) {
+            if(frame != null) {
 
                 g.drawImage(
-                        currentImage,
+                        frame,
                         0,
                         0,
                         getWidth(),

@@ -16,4 +16,9 @@ public class Offset {
     public int getTopPos() {
         return topPos;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Offset(leftPos: %s, topPos: %s)", this.leftPos, this.topPos);
+    }
 }

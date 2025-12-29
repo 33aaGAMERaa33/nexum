@@ -5,10 +5,10 @@ import 'package:nexum_core/material/paint_command_recorder.dart';
 class PaintContext implements PaintCommandRecorder {
   final List<PaintCommand> paintCommands = [];
 
-  void paint(RenderContext renderContext) {
+  void paint(RenderContext graphics) {
     for(final PaintCommand paintCommand in paintCommands) {
-      final RenderContext subContext = renderContext.create();
-      paintCommand.paint(subContext);
+      final RenderContext subGraphics = graphics.create();
+      paintCommand.paint(subGraphics);
     }
   }
 

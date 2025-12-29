@@ -1,11 +1,12 @@
 package io.nexum.render.instructions;
 
-import io.nexum.render.GraphicsInstruction;
+import io.nexum.render.RenderContext;
+import io.nexum.render.RenderInstruction;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class SetColorInstruction extends GraphicsInstruction {
+public class SetColorInstruction extends RenderInstruction {
     private final @NotNull Color color;
 
     public SetColorInstruction(@NotNull Color color) {
@@ -13,7 +14,7 @@ public class SetColorInstruction extends GraphicsInstruction {
     }
 
     @Override
-    public void execute(@NotNull Graphics2D graphics) {
-        graphics.setColor(color);
+    public void execute(@NotNull RenderContext renderContext) {
+        renderContext.setColor(color);
     }
 }

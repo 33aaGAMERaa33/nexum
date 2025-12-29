@@ -1,11 +1,12 @@
 package io.nexum.render.instructions;
 
-import io.nexum.render.GraphicsInstruction;
+import io.nexum.render.RenderContext;
+import io.nexum.render.RenderInstruction;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class SetFontInstruction extends GraphicsInstruction {
+public class SetFontInstruction extends RenderInstruction {
     private final @NotNull Font font;
 
     public SetFontInstruction(@NotNull Font font) {
@@ -13,7 +14,7 @@ public class SetFontInstruction extends GraphicsInstruction {
     }
 
     @Override
-    public void execute(@NotNull Graphics2D graphics) {
-        graphics.setFont(font);
+    public void execute(@NotNull RenderContext renderContext) {
+        renderContext.setFont(font);
     }
 }

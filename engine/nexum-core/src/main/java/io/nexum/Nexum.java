@@ -9,21 +9,20 @@ import io.nexum.helpers.Logger;
 import io.nexum.models.Size;
 import io.nexum.channel.PacketManager;
 import io.nexum.channel.packets.EventPacket;
-import io.nexum.render.GraphicsInstructionsConsumer;
+import io.nexum.render.RenderContext;
+import io.nexum.render.RenderContextConsumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Nexum {
     private final int fpsLimit;
     private boolean started = false;
+    private @Nullable Runnable onRender;
     private final @NotNull Size screenSize;
-    private @Nullable NexumRenderer renderer;
-    private @Nullable BufferedImage lastFrame;
-    private final int imageType = BufferedImage.TYPE_INT_ARGB_PRE;
+    private @Nullable RenderContext renderContext;
 
     private static @Nullable Nexum instance;
     public static final Logger LOGGER = new Logger();
@@ -33,28 +32,20 @@ public class Nexum {
         this.screenSize = screenSize;
     }
 
-    public @NotNull BufferedImage render(@NotNull GraphicsInstructionsConsumer consumer) {
+    public void render(@NotNull RenderContextConsumer consumer) {
+        if(this.renderContext == null) return;
+
         final long start = System.nanoTime();
 
-        final BufferedImage frame = new BufferedImage(
-                this.screenSize.getWidth(),
-                this.screenSize.getHeight(),
-                this.imageType
-        );
-
-        final Graphics2D graphics = frame.createGraphics();
-        consumer.consume(graphics);
-        graphics.dispose();
-
-        if(renderer != null) renderer.render(frame);
-
-        this.lastFrame = frame;
+        this.renderContext.beginFrame();
+        consumer.consume(this.renderContext);
+        this.renderContext.endFrame();
+        if(this.onRender != null) this.onRender.run();
 
         final long end = System.nanoTime();
         final long elapsed = (end - start) / 1_000_000;
 
         this.log("Tempo de renderização: %sms", elapsed);
-        return frame;
     }
 
     public <T extends Event> void emitEvent(@NotNull T event) {
@@ -87,9 +78,12 @@ public class Nexum {
         System.exit(0);
     }
 
-    public void setRenderer(@Nullable NexumRenderer renderer) {
-        this.renderer = renderer;
-        if(renderer != null && this.lastFrame != null) renderer.render(this.lastFrame);
+    public void setRenderContext(@Nullable RenderContext renderContext) {
+        this.renderContext = renderContext;
+    }
+
+    public void setOnRender(@Nullable Runnable onRender) {
+        this.onRender = onRender;
     }
 
     public int getFpsLimit() {
@@ -98,10 +92,6 @@ public class Nexum {
 
     public @NotNull Size getScreenSize() {
         return this.screenSize;
-    }
-
-    public int getImageType() {
-        return this.imageType;
     }
 
     public static Nexum initialize(int fpsLimit, @NotNull Size screenSize) {

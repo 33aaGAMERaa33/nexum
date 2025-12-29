@@ -1,12 +1,13 @@
 package io.nexum.render.instructions;
 
 import io.nexum.models.Offset;
-import io.nexum.render.GraphicsInstruction;
+import io.nexum.render.RenderContext;
+import io.nexum.render.RenderInstruction;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class TranslateInstruction extends GraphicsInstruction {
+public class TranslateInstruction extends RenderInstruction {
     private final @NotNull Offset offset;
 
     public TranslateInstruction(@NotNull Offset offset) {
@@ -14,7 +15,7 @@ public class TranslateInstruction extends GraphicsInstruction {
     }
 
     @Override
-    public void execute(@NotNull Graphics2D graphics) {
-        graphics.translate(offset.getLeftPos(), offset.getTopPos());
+    public void execute(@NotNull RenderContext renderContext) {
+        renderContext.translate(offset);
     }
 }

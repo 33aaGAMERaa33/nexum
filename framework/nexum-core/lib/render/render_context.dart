@@ -42,6 +42,6 @@ class RenderContext {
   void translate(Offset offset) => _addInstruction(TranslateInstruction(offset));
   void drawString(String string) => _addInstruction(DrawStringInstruction(string));
   void setComposite(double alpha) => _addInstruction(SetCompositeInstruction(alpha));
+  void drawRect(Offset offset, Size size) => _addInstruction(DrawRectInstruction(size));
   void clipRect(Offset offset, Size size) => _addInstruction(ClipRectInstruction(offset, size));
-  void drawRect(Offset offset, Size size) => _addInstruction(DrawRectInstruction(offset, size));
 }

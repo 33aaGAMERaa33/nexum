@@ -4,13 +4,13 @@ import io.nexum.core.services.HelperDeserializerService;
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.PacketDeserializer;
 import io.nexum.channel.packets.SendGraphicsPacket;
-import io.nexum.render.GraphicsInstructionsConsumer;
+import io.nexum.render.RenderContextConsumer;
 import org.jetbrains.annotations.NotNull;
 
 public class SendGraphicsPacketDeserializer implements PacketDeserializer<SendGraphicsPacket> {
     @Override
     public @NotNull SendGraphicsPacket deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final GraphicsInstructionsConsumer consumer = HelperDeserializerService.getInstance().deserialize(friendlyBuffer);
+        final RenderContextConsumer consumer = HelperDeserializerService.getInstance().deserialize(friendlyBuffer);
         return new SendGraphicsPacket(consumer);
     }
 

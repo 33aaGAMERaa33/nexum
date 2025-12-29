@@ -11,10 +11,9 @@ import org.jetbrains.annotations.NotNull;
 public class DrawRectInstructionDeserializer implements HelperDeserializer<DrawRectInstruction> {
     @Override
     public @NotNull DrawRectInstruction deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final Offset offset = HelperDeserializerService.getInstance().deserialize(friendlyBuffer);
         final Size size = HelperDeserializerService.getInstance().deserialize(friendlyBuffer);
 
-        return new DrawRectInstruction(offset, size);
+        return new DrawRectInstruction(size);
     }
 
     @Override

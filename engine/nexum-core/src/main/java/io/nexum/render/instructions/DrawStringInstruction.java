@@ -1,11 +1,12 @@
 package io.nexum.render.instructions;
 
-import io.nexum.render.GraphicsInstruction;
+import io.nexum.render.RenderContext;
+import io.nexum.render.RenderInstruction;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class DrawStringInstruction extends GraphicsInstruction {
+public class DrawStringInstruction extends RenderInstruction {
     private final @NotNull String value;
 
     public DrawStringInstruction(@NotNull String value) {
@@ -13,7 +14,7 @@ public class DrawStringInstruction extends GraphicsInstruction {
     }
 
     @Override
-    public void execute(@NotNull Graphics2D graphics) {
-        graphics.drawString(value, 0, graphics.getFontMetrics().getAscent());
+    public void execute(@NotNull RenderContext renderContext) {
+        renderContext.drawString(value);
     }
 }

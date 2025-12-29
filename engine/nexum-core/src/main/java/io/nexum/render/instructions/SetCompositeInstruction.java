@@ -1,11 +1,12 @@
 package io.nexum.render.instructions;
 
-import io.nexum.render.GraphicsInstruction;
+import io.nexum.render.RenderContext;
+import io.nexum.render.RenderInstruction;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class SetCompositeInstruction extends GraphicsInstruction {
+public class SetCompositeInstruction extends RenderInstruction {
     private final float alpha;
 
     public SetCompositeInstruction(float alpha) {
@@ -13,11 +14,8 @@ public class SetCompositeInstruction extends GraphicsInstruction {
     }
 
     @Override
-    public void execute(@NotNull Graphics2D graphics) {
-        graphics.setComposite(AlphaComposite.getInstance(
-                AlphaComposite.SRC_OVER,
-                this.alpha
-        ));
+    public void execute(@NotNull RenderContext renderContext) {
+        renderContext.setComposite(this.alpha);
     }
 
     public float getAlpha() {

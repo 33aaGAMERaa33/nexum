@@ -7,7 +7,6 @@ class DrawRectInstructionSerializer extends HelperSerializer<DrawRectInstruction
   @override
   void serialize(DrawRectInstruction object, FriendlyBuffer friendlyBuffer) {
     HelperSerializerService.instance.serializeObject(object.size, friendlyBuffer);
-    HelperSerializerService.instance.serializeObject(object.offset, friendlyBuffer);
   }
 
   @override
