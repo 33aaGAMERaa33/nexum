@@ -1,0 +1,4 @@
+enum MainAxisSize {
+  max,
+  min
+}

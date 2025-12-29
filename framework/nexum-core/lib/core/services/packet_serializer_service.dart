@@ -1,0 +1,27 @@
+import 'package:nexum_core/exceptions/packet_serialization_exception.dart';
+import 'package:nexum_core/channel/friendly_buffer.dart';
+import 'package:nexum_core/channel/packet.dart';
+
+import '../../channel/packet_serializer.dart';
+import '../storages/packet_serializer_registry.dart';
+
+class PacketSerializerService {
+  static PacketSerializerService get instance => _instance;
+  static const PacketSerializerService _instance = PacketSerializerService._();
+
+  const PacketSerializerService._();
+
+  FriendlyBuffer serializePacket<T extends Packet>(T packet) {
+    final PacketSerializer<Packet> ? packetSerializer = PacketSerializerRegistry.instance.get(packet.runtimeType);
+
+    if(packetSerializer == null) throw PacketSerializationException("O pacote ${packet.runtimeType} não tem um serializador");
+
+    final FriendlyBuffer friendlyBuffer = FriendlyBuffer();
+    packetSerializer.serialize(packet, friendlyBuffer);
+
+    friendlyBuffer.write("packet_uuid", packet.uuid!);
+    friendlyBuffer.write("identifier", packetSerializer.identifier);
+
+    return friendlyBuffer;
+  }
+}

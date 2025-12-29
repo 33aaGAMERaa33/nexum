@@ -1,0 +1,7 @@
+package io.nexum.events;
+
+public abstract class Event {
+    public Event() {
+
+    }
+}
