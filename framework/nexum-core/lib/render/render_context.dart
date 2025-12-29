@@ -2,9 +2,9 @@ import 'package:nexum_core/material/font.dart';
 import 'package:nexum_core/models/color.dart';
 import 'package:nexum_core/models/offset.dart';
 import 'package:nexum_core/models/size.dart';
-import 'package:nexum_core/render/graphics_instruction.dart';
+import 'package:nexum_core/render/render_instruction.dart';
 import 'package:nexum_core/render/instructions/clip_rect_instruction.dart';
-import 'package:nexum_core/render/instructions/create_graphics_instruction.dart';
+import 'package:nexum_core/render/instructions/create_sub_context_instruction.dart';
 import 'package:nexum_core/render/instructions/draw_rect_instruction.dart';
 import 'package:nexum_core/render/instructions/draw_string_instruction.dart';
 import 'package:nexum_core/render/instructions/set_color_instruction.dart';
@@ -12,29 +12,29 @@ import 'package:nexum_core/render/instructions/set_composite_instruction.dart';
 import 'package:nexum_core/render/instructions/set_font_instruction.dart';
 import 'package:nexum_core/render/instructions/translate_instruction.dart';
 
-class Graphics {
-  final List<GraphicsInstruction> _instructions = [];
-  List<GraphicsInstruction> get instructions => _instructions;
+class RenderContext {
+  final List<RenderInstruction> _instructions = [];
+  List<RenderInstruction> get instructions => _instructions;
 
-  Graphics();
+  RenderContext();
 
-  void _addInstruction(GraphicsInstruction instruction) => _instructions.insert(0, instruction);
+  void _addInstruction(RenderInstruction instruction) => _instructions.insert(0, instruction);
 
-  Graphics create() {
-    final CreateGraphicsInstruction instruction = CreateGraphicsInstruction();
+  RenderContext create() {
+    final CreateSubContextInstruction instruction = CreateSubContextInstruction();
     _addInstruction(instruction);
 
-    return instruction.graphics;
+    return instruction.renderContext;
   }
 
-  Graphics createScoped(Offset offset, Size size) {
-    final CreateGraphicsInstruction instruction = CreateGraphicsInstruction();
+  RenderContext createScoped(Offset offset, Size size) {
+    final CreateSubContextInstruction instruction = CreateSubContextInstruction();
     _addInstruction(instruction);
 
-    instruction.graphics.translate(offset);
-    instruction.graphics.clipRect(Offset.zero(), size);
+    instruction.renderContext.translate(offset);
+    instruction.renderContext.clipRect(Offset.zero(), size);
 
-    return instruction.graphics;
+    return instruction.renderContext;
   }
 
   void setFont(Font font) => _addInstruction(SetFontInstruction(font));

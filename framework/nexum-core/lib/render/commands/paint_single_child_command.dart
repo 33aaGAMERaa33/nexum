@@ -1,6 +1,6 @@
 import 'package:nexum_core/material/paint_command.dart';
 import 'package:nexum_core/models/offset.dart';
-import 'package:nexum_core/render/graphics.dart';
+import 'package:nexum_core/render/render_context.dart';
 
 class PaintSingleChildCommand extends PaintCommand {
   final PaintCommand ?  child;
@@ -13,11 +13,11 @@ class PaintSingleChildCommand extends PaintCommand {
   });
 
   @override
-  void paint(Graphics graphics) {
+  void paint(RenderContext renderContext) {
     if(child == null) return;
-    graphics.translate(offset);
-    graphics.clipRect(Offset.zero(), size);
+    renderContext.translate(offset);
+    renderContext.clipRect(Offset.zero(), size);
 
-    child?.paint(graphics);
+    child?.paint(renderContext);
   }
 }

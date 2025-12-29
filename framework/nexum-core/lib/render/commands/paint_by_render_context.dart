@@ -1,26 +1,22 @@
 import 'package:nexum_core/material/paint_command.dart';
-import 'package:nexum_core/models/offset.dart';
 import 'package:nexum_core/render/render_context.dart';
 
-class PaintMultiChildCommand extends PaintCommand {
-  final List<PaintCommand> childrens;
+import '../../models/offset.dart';
 
-  PaintMultiChildCommand({
+class PaintByRenderContext extends PaintCommand {
+  final RenderContext renderContext;
+
+  PaintByRenderContext({
     required super.owner,
     required super.size,
     required super.offset,
-    required this.childrens
+    required this.renderContext,
   });
-
 
   @override
   void paint(RenderContext renderContext) {
     renderContext.translate(offset);
     renderContext.clipRect(Offset.zero(), size);
-
-    for(final PaintCommand child in childrens) {
-      final RenderContext subContext = renderContext.create();
-      child.paint(subContext);
-    }
+    renderContext.instructions.addAll(this.renderContext.instructions);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:nexum_core/models/size.dart';
-import 'package:nexum_core/render/graphics.dart';
+import 'package:nexum_core/render/render_context.dart';
 import 'package:nexum_core/material/render_object.dart';
 import 'package:nexum_core/models/offset.dart';
 import 'package:uuid/uuid.dart';
@@ -20,7 +20,7 @@ abstract class PaintCommand {
     required this.offset,
   });
 
-  void paint(Graphics graphics);
+  void paint(RenderContext renderContext);
 
   void markDirty() {
     if(_dirty) return;

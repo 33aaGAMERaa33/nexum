@@ -11,8 +11,8 @@ import 'package:nexum_core/models/constraints.dart';
 import 'package:nexum_core/models/offset.dart';
 import 'package:nexum_core/models/size.dart';
 import 'package:nexum_core/channel/packet_manager.dart';
-import 'package:nexum_core/channel/packets/send_graphics_packet.dart';
-import 'package:nexum_core/render/graphics.dart';
+import 'package:nexum_core/channel/packets/send_render_context_packet.dart';
+import 'package:nexum_core/render/render_context.dart';
 import 'package:nexum_core/types/void_callback.dart';
 import 'package:nexum_core/widgets/view.dart';
 
@@ -76,10 +76,10 @@ class Nexum {
       final bool painted = _paint();
 
       if(painted) {
-        final Graphics graphics = Graphics();
-        _paintContext.paint(graphics);
+        final RenderContext renderContext = RenderContext();
+        _paintContext.paint(renderContext);
 
-        _packetManager.sendPacket(SendGraphicsPacket(graphics));
+        _packetManager.sendPacket(SendRenderContextPacket(renderContext));
       }
 
       final int elapsed = DateTime.now().millisecondsSinceEpoch - start;

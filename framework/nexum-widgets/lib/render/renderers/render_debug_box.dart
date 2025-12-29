@@ -5,9 +5,9 @@ import 'package:nexum_core/material/render_box.dart';
 import 'package:nexum_core/models/offset.dart';
 import 'package:nexum_core/models/size.dart';
 import 'package:nexum_core/render/commands/paint_multi_child_command.dart';
-import 'package:nexum_core/render/graphics.dart';
+import 'package:nexum_core/render/render_context.dart';
 import 'package:nexum_core/render/mixins/single_child_render_object.dart';
-import 'package:nexum_core/render/commands/paint_by_graphics.dart';
+import 'package:nexum_core/render/commands/paint_by_render_context.dart';
 
 class RenderDebugBox extends RenderBox with SingleChildRenderObject {
   @override
@@ -28,9 +28,9 @@ class RenderDebugBox extends RenderBox with SingleChildRenderObject {
         childrens: [
           if(childPaintCommandGetter.getChildPaintCommand() != null)
             childPaintCommandGetter.getChildPaintCommand()!,
-          PaintByGraphics(
+          PaintByRenderContext(
             owner: this, offset: offset, size: size,
-            graphics: Graphics()
+            renderContext: RenderContext()
               ..setColor(Colors.black)
               ..drawRect(Offset.zero(), size)
           )

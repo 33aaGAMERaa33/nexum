@@ -1,7 +1,7 @@
 import 'package:nexum_core/models/offset.dart';
-import 'package:nexum_core/render/graphics_instruction.dart';
+import 'package:nexum_core/render/render_instruction.dart';
 
-class TranslateInstruction extends GraphicsInstruction {
+class TranslateInstruction extends RenderInstruction {
   final Offset offset;
   TranslateInstruction(this.offset);
 }

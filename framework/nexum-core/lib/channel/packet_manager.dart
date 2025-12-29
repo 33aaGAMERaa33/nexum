@@ -33,10 +33,10 @@ import 'package:nexum_core/channel/handlers/test_packet_handler.dart';
 import 'package:nexum_core/channel/channel.dart';
 import 'package:nexum_core/channel/packet.dart';
 import 'package:nexum_core/channel/serializers/helpers/color_serializer.dart';
-import 'package:nexum_core/channel/serializers/helpers/create_graphics_instruction_serializer.dart';
+import 'package:nexum_core/channel/serializers/helpers/create_sub_context_instruction_serializer.dart';
 import 'package:nexum_core/channel/serializers/helpers/font_serializer.dart';
 import 'package:nexum_core/channel/serializers/helpers/draw_string_instruction_serializer.dart';
-import 'package:nexum_core/channel/serializers/helpers/graphics_serializer.dart';
+import 'package:nexum_core/channel/serializers/helpers/render_context_serializer.dart';
 import 'package:nexum_core/channel/serializers/helpers/offset_serializer.dart';
 import 'package:nexum_core/channel/serializers/helpers/set_color_instruction_serializer.dart';
 import 'package:nexum_core/channel/serializers/helpers/set_font_instructon_serializer.dart';
@@ -45,7 +45,7 @@ import 'package:nexum_core/channel/serializers/helpers/translate_instruction_ser
 import 'package:nexum_core/channel/serializers/logger_packet_serializer.dart';
 import 'package:nexum_core/channel/serializers/request_data_sync_packet_serializer.dart';
 import 'package:nexum_core/channel/serializers/request_text_metrics_serializer.dart';
-import 'package:nexum_core/channel/serializers/send_graphics_packet_serializer.dart';
+import 'package:nexum_core/channel/serializers/send_render_context_packet_serializer.dart';
 import 'package:nexum_core/channel/serializers/test_packet_serializer.dart';
 
 import '../core/services/packet_deserializer_service.dart';
@@ -70,8 +70,8 @@ class PacketManager {
     HelperSerialzerRegistry.instance.register(FontSerializer());
     HelperSerialzerRegistry.instance.register(ColorSerializer());
     HelperSerialzerRegistry.instance.register(TestObjectSerializer());
-    HelperSerialzerRegistry.instance.register(GraphicsSerializer());
-    HelperSerialzerRegistry.instance.register(CreateGraphicsInstructionSerializer());
+    HelperSerialzerRegistry.instance.register(RenderContextSerializer());
+    HelperSerialzerRegistry.instance.register(CreateSubContextInstructionSerializer());
     HelperSerialzerRegistry.instance.register(DrawStringInstructionSerializer());
     HelperSerialzerRegistry.instance.register(SetFontInstructonSerializer());
     HelperSerialzerRegistry.instance.register(SetColorInstructionSerializer());
@@ -91,7 +91,7 @@ class PacketManager {
     PacketSerializerRegistry.instance.register(HeartBeatPacketSerializer());
     PacketSerializerRegistry.instance.register(ReadyToStartPacketSerializer());
     PacketSerializerRegistry.instance.register(TestPacketSerializer());
-    PacketSerializerRegistry.instance.register(SendGraphicsPacketSerializer());
+    PacketSerializerRegistry.instance.register(SendRenderContextPacketSerializer());
     PacketSerializerRegistry.instance.register(RequestDataSyncPacketSerializer());
     PacketSerializerRegistry.instance.register(RequestTextMetricsSerializer());
 

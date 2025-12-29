@@ -1,6 +1,6 @@
-import 'package:nexum_core/render/graphics_instruction.dart';
+import 'package:nexum_core/render/render_instruction.dart';
 
-class DrawStringInstruction extends GraphicsInstruction {
+class DrawStringInstruction extends RenderInstruction {
   final String string;
   DrawStringInstruction(this.string);
 }

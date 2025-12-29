@@ -1,8 +1,8 @@
 import 'package:nexum_core/models/offset.dart';
 import 'package:nexum_core/models/size.dart';
-import 'package:nexum_core/render/graphics_instruction.dart';
+import 'package:nexum_core/render/render_instruction.dart';
 
-class ClipRectInstruction extends GraphicsInstruction {
+class ClipRectInstruction extends RenderInstruction {
   final Size size;
   final Offset offset;
 

@@ -2,7 +2,7 @@ import 'package:nexum_core/material/font.dart';
 import 'package:nexum_core/material/paint_command.dart';
 import 'package:nexum_core/models/color.dart';
 import 'package:nexum_core/models/offset.dart';
-import 'package:nexum_core/render/graphics.dart';
+import 'package:nexum_core/render/render_context.dart';
 
 class PaintParagraphCommand extends PaintCommand {
   final Font font;
@@ -19,12 +19,12 @@ class PaintParagraphCommand extends PaintCommand {
   });
 
   @override
-  void paint(Graphics graphics) {
-    graphics.translate(offset);
-    graphics.clipRect(Offset.zero(), size);
+  void paint(RenderContext renderContext) {
+    renderContext.translate(offset);
+    renderContext.clipRect(Offset.zero(), size);
 
-    graphics.setFont(font);
-    graphics.setColor(color);
-    graphics.drawString(value);
+    renderContext.setFont(font);
+    renderContext.setColor(color);
+    renderContext.drawString(value);
   }
 }

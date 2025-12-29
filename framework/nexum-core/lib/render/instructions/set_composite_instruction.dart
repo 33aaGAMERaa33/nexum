@@ -1,6 +1,6 @@
-import 'package:nexum_core/render/graphics_instruction.dart';
+import 'package:nexum_core/render/render_instruction.dart';
 
-class SetCompositeInstruction extends GraphicsInstruction {
+class SetCompositeInstruction extends RenderInstruction {
   final double alpha;
   SetCompositeInstruction(this.alpha);
 }

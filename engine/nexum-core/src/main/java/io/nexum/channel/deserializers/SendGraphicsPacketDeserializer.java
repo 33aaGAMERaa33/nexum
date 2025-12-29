@@ -16,7 +16,7 @@ public class SendGraphicsPacketDeserializer implements PacketDeserializer<SendGr
 
     @Override
     public @NotNull String getIdentifier() {
-        return "send_graphics";
+        return "send_render_context";
     }
 
     @Override
