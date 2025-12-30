@@ -8,6 +8,7 @@ import java.awt.*;
 
 public interface RenderContext {
     @NotNull RenderContext create();
+    @NotNull RenderContext createWithoutContext();
     @NotNull RenderContext create(@NotNull Offset offset, @NotNull Size size);
 
     void beginFrame();

@@ -1,6 +1,6 @@
 package io.nexum.channel.deserializers;
 
-import io.nexum.core.services.HelperDeserializerService;
+import io.nexum.services.HelperDeserializerService;
 import io.nexum.material.TestObject;
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.PacketDeserializer;

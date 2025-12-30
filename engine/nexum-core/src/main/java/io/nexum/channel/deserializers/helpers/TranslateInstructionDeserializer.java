@@ -1,6 +1,6 @@
 package io.nexum.channel.deserializers.helpers;
 
-import io.nexum.core.services.HelperDeserializerService;
+import io.nexum.services.HelperDeserializerService;
 import io.nexum.models.Offset;
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.HelperDeserializer;

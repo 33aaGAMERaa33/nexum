@@ -1,4 +1,0 @@
-enum MainAxisSize {
-  max,
-  min
-}

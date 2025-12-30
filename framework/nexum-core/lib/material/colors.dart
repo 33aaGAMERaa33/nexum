@@ -1,4 +1,4 @@
-import 'package:nexum_core/models/color.dart';
+import 'package:nexum_core/ui/color.dart';
 
 class Colors {
   const Colors._();

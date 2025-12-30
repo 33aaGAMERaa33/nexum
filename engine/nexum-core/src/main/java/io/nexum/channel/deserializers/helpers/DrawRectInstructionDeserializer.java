@@ -2,8 +2,7 @@ package io.nexum.channel.deserializers.helpers;
 
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.HelperDeserializer;
-import io.nexum.core.services.HelperDeserializerService;
-import io.nexum.models.Offset;
+import io.nexum.services.HelperDeserializerService;
 import io.nexum.models.Size;
 import io.nexum.render.instructions.DrawRectInstruction;
 import org.jetbrains.annotations.NotNull;

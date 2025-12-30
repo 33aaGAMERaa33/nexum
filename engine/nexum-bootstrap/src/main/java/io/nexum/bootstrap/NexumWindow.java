@@ -2,9 +2,11 @@ package io.nexum.bootstrap;
 
 
 import io.nexum.Nexum;
+import io.nexum.channel.Channel;
 import io.nexum.channel.PacketManager;
 import io.nexum.events.PointerClickEvent;
 import io.nexum.events.PointerMoveEvent;
+import io.nexum.events.PointerScrollEvent;
 import io.nexum.models.Offset;
 import io.nexum.models.Size;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +16,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 
 public class NexumWindow extends JFrame {
@@ -58,7 +61,7 @@ public class NexumWindow extends JFrame {
         public RenderPanel() {
             this.addMouseListener(new MouseAdapter() {
                 private void onMouse(MouseEvent e, boolean released) {
-                    if(!PacketManager.isInitialized()) return;
+                    if(!canEmitEvent()) return;
 
                     final PointerClickEvent clickEvent = new PointerClickEvent(
                             new Offset(e.getX(), e.getY()), released
@@ -81,7 +84,7 @@ public class NexumWindow extends JFrame {
             this.addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
-                    if(!PacketManager.isInitialized()) return;
+                    if(!canEmitEvent()) return;
 
                     Nexum.getInstance().emitEvent(new PointerMoveEvent(
                             new Offset(e.getX(), e.getY())
@@ -92,6 +95,16 @@ public class NexumWindow extends JFrame {
                 public void mouseDragged(MouseEvent e) {
 
                 }
+            });
+
+            this.addMouseWheelListener(e -> {
+                if(!canEmitEvent()) return;
+
+                Nexum.getInstance().emitEvent(new PointerScrollEvent(
+                        new Offset(e.getX(), e.getY()),
+                        e.getWheelRotation(),
+                        e.getScrollAmount()
+                ));
             });
         }
 
@@ -113,4 +126,8 @@ public class NexumWindow extends JFrame {
         }
     }
 
+
+    private static boolean canEmitEvent() {
+        return Nexum.isInitialized() && Channel.isInitialized() && PacketManager.isInitialized();
+    }
 }

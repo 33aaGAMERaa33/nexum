@@ -1,7 +1,7 @@
-import 'package:nexum_core/material/render_object.dart';
-import 'package:nexum_core/material/single_child_render_object_widget.dart';
 
-import '../render/renderers/render_view.dart';
+import '../rendering/object.dart';
+import '../rendering/renderers/render_view.dart';
+import 'framework.dart';
 
 class View extends SingleChildRenderObjectWidget {
   View({required super.child});

@@ -5,14 +5,14 @@ import io.nexum.channel.deserializers.helpers.*;
 import io.nexum.channel.handlers.*;
 import io.nexum.channel.serializers.*;
 import io.nexum.channel.serializers.helpers.*;
-import io.nexum.core.services.PacketDeserializerService;
-import io.nexum.core.services.PacketHandlerService;
-import io.nexum.core.services.PacketSerializerService;
-import io.nexum.core.storages.*;
+import io.nexum.services.PacketDeserializerService;
+import io.nexum.services.PacketHandlerService;
+import io.nexum.services.PacketSerializerService;
 import io.nexum.exceptions.AlreadyInitialized;
 import io.nexum.exceptions.PacketDeserializationException;
 import io.nexum.exceptions.PacketHandleException;
 import io.nexum.exceptions.PacketSerializationException;
+import io.nexum.storages.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +32,10 @@ public class PacketManager {
         HelperSerializerRegistry.getInstance().register(new TestObjectSerializer());
         HelperSerializerRegistry.getInstance().register(new TextMetricsSerializer());
         HelperSerializerRegistry.getInstance().register(new PointerMoveEventSerializer());
+        HelperSerializerRegistry.getInstance().register(new PointerScrollEventSerializer());
         HelperSerializerRegistry.getInstance().register(new PointerClickEventSerializer());
 
+        HelperDeserializerRegistry.getInstance().register(new CreateNewContextInstructionDeserializer());
         HelperDeserializerRegistry.getInstance().register(new DrawRectInstructionDeserializer());
         HelperDeserializerRegistry.getInstance().register(new SizeDeserializer());
         HelperDeserializerRegistry.getInstance().register(new OffsetDeserializer());

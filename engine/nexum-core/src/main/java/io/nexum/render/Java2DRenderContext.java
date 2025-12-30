@@ -44,6 +44,11 @@ public class Java2DRenderContext implements RenderContext {
     }
 
     @Override
+    public @NotNull RenderContext createWithoutContext() {
+        return new Java2DRenderContext(this.frame, this.frame.createGraphics());
+    }
+
+    @Override
     public @NotNull RenderContext create(@NotNull Offset offset, @NotNull Size size) {
         final RenderContext subContext = this.create();
         subContext.clipRect(offset, size);

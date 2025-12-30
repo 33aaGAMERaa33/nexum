@@ -72,7 +72,7 @@ public class Channel {
             ) {
                 String line;
                 while (this.isRunning && (line = reader.readLine()) != null) {
-                    this.error("[DART] %s", line);
+                    System.out.println(line);
                 }
             } catch (Exception e) {
                 this.error("Erro STDERR: %s", e.getMessage());

@@ -1,6 +1,6 @@
 package io.nexum.channel.serializers;
 
-import io.nexum.core.services.HelperSerializerService;
+import io.nexum.services.HelperSerializerService;
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.PacketSerializer;
 import io.nexum.channel.packets.SendTextMetricsPacket;

@@ -1,4 +1,0 @@
-enum FlexFit {
-  tight,
-  loose,
-}

@@ -1,6 +1,6 @@
 package io.nexum.channel.serializers.helpers;
 
-import io.nexum.core.services.HelperSerializerService;
+import io.nexum.services.HelperSerializerService;
 import io.nexum.events.PointerMoveEvent;
 import io.nexum.channel.FriendlyBuffer;
 import io.nexum.channel.HelperSerializer;

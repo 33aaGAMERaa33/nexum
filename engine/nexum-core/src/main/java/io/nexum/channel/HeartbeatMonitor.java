@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class HeartbeatMonitor {
-    private static final long TIMEOUT = 5_000;
+    private static final long TIMEOUT = 10_000;
     private static volatile long lastSeen = System.currentTimeMillis();
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 

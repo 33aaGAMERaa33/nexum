@@ -12,8 +12,8 @@ public class Main {
             final Nexum nexum = Nexum.initialize(120, new Size(800, 600));
             final NexumWindow window = new NexumWindow(nexum.getScreenSize());
 
-            nexum.setOnRender(window::repaint);
             nexum.setRenderContext(new Java2DRenderContext(window.getFrame()));
+            nexum.setOnRender(window::repaint);
             nexum.start();
         }catch (Exception e) {
             e.printStackTrace();
