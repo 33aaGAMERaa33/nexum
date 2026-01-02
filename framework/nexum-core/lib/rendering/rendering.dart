@@ -4,6 +4,7 @@ import '../painting/geometry.dart';
 import '../ui/color.dart';
 import '../ui/font.dart';
 
+@immutable
 abstract class RenderInstruction {
 
 }
