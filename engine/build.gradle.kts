@@ -17,4 +17,12 @@ subprojects {
     tasks.withType<JavaCompile>().configureEach {
         options.release.set(17)
     }
+
+    tasks.withType<Test> {
+        enableAssertions = true
+    }
+
+    tasks.withType<JavaExec>().configureEach {
+        jvmArgs("-ea")
+    }
 }

@@ -7,9 +7,9 @@ import io.nexum.render.RenderInstruction;
 import io.nexum.render.RenderContextConsumer;
 import org.jetbrains.annotations.NotNull;
 
-public class RenderInstructionsConsumerDeserializer implements HelperDeserializer<RenderContextConsumer> {
+public class RenderContextConsumerDeserializer implements HelperDeserializer<RenderContextConsumer> {
     @Override
-    public @NotNull RenderContextConsumer deserialize(@NotNull FriendlyBuffer friendlyBuffer) {;
+    public @NotNull RenderContextConsumer deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
         final RenderContextConsumer consumer = new RenderContextConsumer();
         final int instructionsSize = friendlyBuffer.readInt();
 

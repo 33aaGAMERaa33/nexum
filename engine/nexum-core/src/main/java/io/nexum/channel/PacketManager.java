@@ -49,7 +49,8 @@ public class PacketManager {
         HelperDeserializerRegistry.getInstance().register(new SetColorInstructionDeserializer());
         HelperDeserializerRegistry.getInstance().register(new DrawStringInstructionDeserializer());
         HelperDeserializerRegistry.getInstance().register(new CreateGraphicsInstructionDeserializer());
-        HelperDeserializerRegistry.getInstance().register(new RenderInstructionsConsumerDeserializer());
+        HelperDeserializerRegistry.getInstance().register(new RenderInstructionDeserializer());
+        HelperDeserializerRegistry.getInstance().register(new RenderContextConsumerDeserializer());
 
         PacketHandlerRegistry.getInstance().register(new TestPacketHandler());
         PacketHandlerRegistry.getInstance().register(new HeartBeatPacketHandler());
@@ -69,7 +70,7 @@ public class PacketManager {
         PacketDeserializerRegistry.getInstance().register(new HeartBeatPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new LoggerPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new TestPacketDeserializer());
-        PacketDeserializerRegistry.getInstance().register(new SendGraphicsPacketDeserializer());
+        PacketDeserializerRegistry.getInstance().register(new SendRenderContextPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new RequestDataSyncPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new RequestTextMetricsPacketDeserializer());
     }
@@ -94,6 +95,8 @@ public class PacketManager {
             }
         }catch(PacketDeserializationException exception) {
             this.warn(exception.getMessage());
+        }catch(Exception | AssertionError e) {
+            e.printStackTrace();
         }
     }
 

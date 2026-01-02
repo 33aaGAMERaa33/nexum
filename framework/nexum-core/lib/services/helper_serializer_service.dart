@@ -22,4 +22,17 @@ class HelperSerializerService {
     friendlyBuffer.writeString(helperSerializer.identifier);
     helperSerializer.serialize(object, friendlyBuffer);
   }
+
+  void serializeObjectByType<T>(T object, FriendlyBuffer friendlyBuffer) {
+    final HelperSerializer ? helperSerializer = HelperSerialzerRegistry.instance.getSerializer(T);
+
+    if(helperSerializer == null) {
+      throw HelperSerializerException(
+          "Não foi possivel encontrar o serializador para o tipo $T"
+      );
+    }
+
+    friendlyBuffer.writeString(helperSerializer.identifier);
+    helperSerializer.serialize(object, friendlyBuffer);
+  }
 }

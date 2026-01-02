@@ -49,6 +49,7 @@ class PacketManager {
     HelperSerialzerRegistry.instance.register(SizeSerializer());
     HelperSerialzerRegistry.instance.register(OffsetSerializer());
 
+    HelperSerialzerRegistry.instance.register(RenderInstructionSerializer());
     HelperSerialzerRegistry.instance.register(RenderContextSerializer());
     HelperSerialzerRegistry.instance.register(SetFontInstructonSerializer());
     HelperSerialzerRegistry.instance.register(DrawRectInstructionSerializer());
@@ -57,7 +58,6 @@ class PacketManager {
     HelperSerialzerRegistry.instance.register(TranslateInstructionSerializer());
     HelperSerialzerRegistry.instance.register(DrawStringInstructionSerializer());
     HelperSerialzerRegistry.instance.register(SetCompositeInstructionSerializer());
-    HelperSerialzerRegistry.instance.register(CreateNewContextInstructionSerializer());
     HelperSerialzerRegistry.instance.register(CreateSubContextInstructionSerializer());
 
     HelperDeserializerRegistry.instance.register(OffsetDeserializer());

@@ -5,6 +5,22 @@ import '../helper_serializer.dart';
 import '../packet_serializer.dart';
 import '../packets/rendering.dart';
 
+class RenderInstructionSerializer<T extends RenderInstruction> extends HelperSerializer<T> {
+  const RenderInstructionSerializer();
+
+  @override
+  void serialize(T object, FriendlyBuffer friendlyBuffer) {
+    assert(RenderInstruction.contains(object), object);
+    friendlyBuffer.writeString(object.uuid);
+  }
+
+  @override
+  String get identifier => "render_instruction";
+
+  @override
+  Type get objectType => RenderInstruction;
+}
+
 class ClipRectInstructionSerializer extends HelperSerializer<ClipRectInstruction> {
   @override
   void serialize(ClipRectInstruction object, FriendlyBuffer friendlyBuffer) {
@@ -30,19 +46,6 @@ class CreateSubContextInstructionSerializer extends HelperSerializer<CreateSubCo
   void serialize(CreateSubContextInstruction object, FriendlyBuffer friendlyBuffer) {
     HelperSerializerService.instance.serializeObject(object.renderContext, friendlyBuffer);
   }
-}
-
-class CreateNewContextInstructionSerializer extends HelperSerializer<CreateNewContextInstruction> {
-  @override
-  void serialize(CreateNewContextInstruction object, FriendlyBuffer friendlyBuffer) {
-    HelperSerializerService.instance.serializeObject(object.renderContext, friendlyBuffer);
-  }
-
-  @override
-  String get identifier => "create_new_context";
-
-  @override
-  Type get objectType => CreateNewContextInstruction;
 }
 
 class DrawRectInstructionSerializer extends HelperSerializer<DrawRectInstruction> {
@@ -135,13 +138,17 @@ class RenderContextSerializer extends HelperSerializer<RenderContext> {
   void serialize(RenderContext object, FriendlyBuffer friendlyBuffer) {
     friendlyBuffer.writeInt(object.instructions.length);
 
-    for(final RenderInstruction renderInstruction in object.instructions) {
-      HelperSerializerService.instance.serializeObject(renderInstruction, friendlyBuffer);
+    for(final RenderInstruction instruction in object.instructions) {
+      if(instruction is CreateContextInstruction) {
+        HelperSerializerService.instance.serializeObject(instruction, friendlyBuffer);
+      }else {
+        HelperSerializerService.instance.serializeObjectByType<RenderInstruction>(instruction, friendlyBuffer);
+      }
     }
   }
 }
 
-class SendRenderContextPacketSerializer extends PacketSerializer<SendRenderContextPacket>{
+class SendRenderContextPacketSerializer extends PacketSerializer<SendRenderContextPacket> {
   @override
   String get identifier => "send_render_context";
 
@@ -150,6 +157,15 @@ class SendRenderContextPacketSerializer extends PacketSerializer<SendRenderConte
 
   @override
   void serialize(SendRenderContextPacket packet, FriendlyBuffer friendlyBuffer) {
-    HelperSerializerService.instance.serializeObject(packet.renderContext, friendlyBuffer);
+    final RenderContext renderContext = packet.renderContext;
+    final int instructionsCacheLength = renderContext.newInstructions.length;
+    friendlyBuffer.writeInt(instructionsCacheLength);
+
+    for(final RenderInstruction instruction in renderContext.newInstructions) {
+      friendlyBuffer.writeString(instruction.uuid);
+      HelperSerializerService.instance.serializeObject(instruction, friendlyBuffer);
+    }
+
+    HelperSerializerService.instance.serializeObject(renderContext, friendlyBuffer);
   }
 }

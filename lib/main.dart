@@ -18,13 +18,13 @@ class Example extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> childrens = [];
 
-    for(int i = 1; i <= 1000; i++) {
+    for(int i = 1; i <= 1_000; i++) {
       childrens.add(DebugBox(
         child: SizedBox(
           width: 100,
           height: 100,
           child: Center(
-            child: RichText("Olá, Mundo!")
+            child: RichText("Olá, Mundo $i!"),
           )
         ),
       ));

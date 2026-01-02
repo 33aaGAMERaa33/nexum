@@ -37,8 +37,7 @@ class PaintContext implements PaintCommandRecorder {
 
   void paint(RenderContext renderContext) {
     for(final PaintCommand paintCommand in paintCommands) {
-      final RenderContext subContext = renderContext.create();
-      paintCommand.paint(subContext);
+      paintCommand.paint(renderContext);
     }
   }
 
