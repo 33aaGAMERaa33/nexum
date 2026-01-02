@@ -18,8 +18,8 @@ public class PacketDeserializerService {
     }
 
     public <T extends Packet> @NotNull T deserializePacket(@NotNull FriendlyBuffer friendlyBuffer) {
-        final String identifier = friendlyBuffer.read("identifier");
-        final UUID uuid = UUID.fromString(friendlyBuffer.read("packet_uuid"));
+        final String identifier = friendlyBuffer.readString();
+        final UUID uuid = UUID.fromString(friendlyBuffer.readString());
 
         @Nullable
         final PacketDeserializer<Packet> packetDeserializer = PacketDeserializerRegistry.getInstance().get(identifier);

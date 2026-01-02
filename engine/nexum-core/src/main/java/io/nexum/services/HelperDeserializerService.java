@@ -15,7 +15,7 @@ public class HelperDeserializerService {
     }
 
     public <T> @NotNull T deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final String identifier = friendlyBuffer.read("identifier");
+        final String identifier = friendlyBuffer.readString();
 
         @Nullable
         final HelperDeserializer<Object> helperDeserializer = HelperDeserializerRegistry.getInstance().get(identifier);

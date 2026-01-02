@@ -22,8 +22,8 @@ public class HelperSerializerService {
                 String.format("O serializador para o objeto %s não foi encontrado", object.getClass().getSimpleName())
         );
 
+        friendlyBuffer.writeString(helperSerializer.getIdentifier());
         helperSerializer.serialize(object, friendlyBuffer);
-        friendlyBuffer.write("identifier", helperSerializer.getIdentifier());
     }
 
     public static @NotNull HelperSerializerService getInstance() {

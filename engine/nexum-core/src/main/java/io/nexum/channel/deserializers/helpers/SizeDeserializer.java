@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 public class SizeDeserializer implements HelperDeserializer<Size> {
     @Override
     public @NotNull Size deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final int height = friendlyBuffer.readInt();
         final int width = friendlyBuffer.readInt();
+        final int height = friendlyBuffer.readInt();
 
         return new Size(width, height);
     }

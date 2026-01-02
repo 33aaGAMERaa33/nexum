@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:nexum_core/foundation/helpers/logger.dart';
 import 'package:nexum_core/widgets/framework.dart';
 
 import 'foundation/channel/channel.dart';
@@ -33,7 +34,7 @@ void runApp(Widget widget) async {
     nexum.start(widget);
   }, zoneSpecification: ZoneSpecification(
     print: (_, _, _, line) {
-      stderr.writeln(line);
+      Logger.log("Print", line);
     },
   ));
 }

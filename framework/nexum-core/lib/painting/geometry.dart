@@ -8,6 +8,14 @@ class Size {
   }
 
   @override
+  bool operator ==(Object other) {
+    return other is Size && other.width == width && other.height == height;
+  }
+
+  @override
+  int get hashCode => Object.hash(width, height);
+
+  @override
   String toString() => "Size(width: $width, height: $height)";
 }
 
@@ -39,6 +47,14 @@ class Offset {
   Offset operator +(Offset other) {
     return Offset(leftPos: leftPos + other.leftPos, topPos: topPos + other.topPos);
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is Offset && other.leftPos == leftPos && other.topPos == topPos;
+  }
+
+  @override
+  int get hashCode => Object.hash(leftPos, topPos);
 }
 
 class Rect {

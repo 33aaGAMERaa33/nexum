@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 public class OffsetDeserializer implements HelperDeserializer<Offset> {
     @Override
     public @NotNull Offset deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final int topPos = friendlyBuffer.readInt();
         final int leftPos = friendlyBuffer.readInt();
+        final int topPos = friendlyBuffer.readInt();
 
         return new Offset(leftPos, topPos);
     }

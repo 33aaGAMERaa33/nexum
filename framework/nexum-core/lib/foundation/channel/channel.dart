@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:nexum_core/foundation/channel/friendly_buffer.dart';
 import 'package:nexum_core/foundation/channel/packet_manager.dart';
 
 class Channel {
@@ -45,27 +46,20 @@ class Channel {
       if (bytes.length < 4 + size) return;
 
       final payload = bytes.sublist(4, 4 + size);
-      final message = utf8.decode(payload);
+      final FriendlyBuffer friendlyBuffer = FriendlyBuffer.fromBytes(payload);
 
-      packetManager.handleReceivedData(message);
+      packetManager.handleReceivedData(friendlyBuffer);
 
       _buffer.clear();
       _buffer.add(bytes.sublist(4 + size));
     }
   }
 
-  void send(String message) {
-    final bytes = utf8.encode(message);
-    final buffer = BytesBuilder();
+  void send(List<int> payload) {
+    final ByteData lengthData = ByteData(4);
+    lengthData.setUint32(0, payload.length, Endian.little);
 
-    buffer.add([
-      (bytes.length >> 24) & 0xFF,
-      (bytes.length >> 16) & 0xFF,
-      (bytes.length >> 8) & 0xFF,
-      bytes.length & 0xFF,
-    ]);
-
-    buffer.add(bytes);
-    stdout.add(buffer.toBytes());
+    stdout.add(lengthData.buffer.asUint8List());
+    stdout.add(payload);
   }
 }

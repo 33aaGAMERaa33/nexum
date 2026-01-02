@@ -5,7 +5,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.*;
 
@@ -20,7 +24,7 @@ public class Channel {
     private final DataInputStream errorStream;
     private final DataOutputStream outputStream;
     private final FrameworkProcessStorage frameworkProcessStorage;
-    private final BlockingQueue<String> sendQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<byte[]> sendQueue = new LinkedBlockingQueue<>();
     private final ExecutorService sendQueueExecutor = Executors.newFixedThreadPool(1);
     private final ExecutorService incomingDataExecutors = Executors.newFixedThreadPool(2);
 
@@ -50,14 +54,21 @@ public class Channel {
         this.incomingDataExecutors.submit(() -> {
             try {
                 while (this.isRunning) {
-                    final int size = this.inputStream.readInt();
-                    final byte[] payload = this.inputStream.readNBytes(size);
-                    final String data = new String(payload, StandardCharsets.UTF_8);
+                    final byte[] lenBytes = this.inputStream.readNBytes(4);
+                    final int size = ByteBuffer.wrap(lenBytes)
+                            .order(ByteOrder.LITTLE_ENDIAN)
+                            .getInt();
 
-                    this.packetManager.handleReceivedData(data);
+                    final byte[] payload = this.inputStream.readNBytes(size);
+                    final FriendlyBuffer friendlyBuffer = new FriendlyBuffer(payload);
+
+                    this.packetManager.handleReceivedData(friendlyBuffer);
                 }
-            }catch (IOException e) {
+            } catch (IOException e) {
                 this.log("STDOUT fechado");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(-1);
             }
 
             this.stop();
@@ -105,8 +116,7 @@ public class Channel {
         this.senderTask = this.sendQueueExecutor.submit(() -> {
             while(this.isRunning) {
                 try {
-                    final String data = this.sendQueue.take();
-                    final byte[] payload = data.getBytes(StandardCharsets.UTF_8);
+                    final byte[] payload = this.sendQueue.take();
 
                     this.outputStream.writeInt(payload.length);
                     this.outputStream.write(payload);
@@ -119,8 +129,8 @@ public class Channel {
         });
     }
 
-    public void send(@NotNull String data) {
-        this.sendQueue.offer(data);
+    public void send(@NotNull byte[] bytes) {
+        this.sendQueue.offer(bytes);
     }
 
     private void log(@NotNull String log, Object ... args) {

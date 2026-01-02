@@ -16,10 +16,11 @@ class PacketSerializerService {
     if(packetSerializer == null) throw PacketSerializationException("O pacote ${packet.runtimeType} não tem um serializador");
 
     final FriendlyBuffer friendlyBuffer = FriendlyBuffer();
-    packetSerializer.serialize(packet, friendlyBuffer);
 
-    friendlyBuffer.write("packet_uuid", packet.uuid!);
-    friendlyBuffer.write("identifier", packetSerializer.identifier);
+    friendlyBuffer.writeString(packetSerializer.identifier);
+    friendlyBuffer.writeString(packet.uuid!);
+
+    packetSerializer.serialize(packet, friendlyBuffer);
 
     return friendlyBuffer;
   }

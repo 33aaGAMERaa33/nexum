@@ -28,9 +28,9 @@ public class PacketSerializerService {
                 packet.getClass().getSimpleName()
         ));
 
+        friendlyBuffer.writeString(packetSerializer.getIdentifier());
+        friendlyBuffer.writeString(Objects.requireNonNull(packet.getUUID()).toString());
         packetSerializer.serialize(packet, friendlyBuffer);
-        friendlyBuffer.write("packet_uuid", Objects.requireNonNull(packet.getUUID()));
-        friendlyBuffer.write("identifier", packetSerializer.getIdentifier());
 
         return friendlyBuffer;
     }

@@ -7,7 +7,7 @@ import io.nexum.render.RenderInstruction;
 import io.nexum.render.RenderContextConsumer;
 import org.jetbrains.annotations.NotNull;
 
-public class GraphicsInstructionsConsumerDeserializer implements HelperDeserializer<RenderContextConsumer> {
+public class RenderInstructionsConsumerDeserializer implements HelperDeserializer<RenderContextConsumer> {
     @Override
     public @NotNull RenderContextConsumer deserialize(@NotNull FriendlyBuffer friendlyBuffer) {;
         final RenderContextConsumer consumer = new RenderContextConsumer();

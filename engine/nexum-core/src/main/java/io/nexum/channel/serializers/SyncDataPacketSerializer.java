@@ -8,9 +8,9 @@ import org.jetbrains.annotations.NotNull;
 public class SyncDataPacketSerializer implements PacketSerializer<SyncDataPacket> {
     @Override
     public void serialize(@NotNull SyncDataPacket packet, @NotNull FriendlyBuffer friendlyBuffer) {
-        friendlyBuffer.writeInt(packet.getFpsLimit());
-        friendlyBuffer.writeInt(packet.getScreenSize().getHeight());
         friendlyBuffer.writeInt(packet.getScreenSize().getWidth());
+        friendlyBuffer.writeInt(packet.getScreenSize().getHeight());
+        friendlyBuffer.writeInt(packet.getFpsLimit());
     }
 
     @Override

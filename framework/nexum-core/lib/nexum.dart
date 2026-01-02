@@ -75,13 +75,14 @@ class Nexum {
       if(painted) {
         final RenderContext renderContext = RenderContext();
         _paintContext.paint(renderContext);
-        renderContext.solve();
 
         _packetManager.sendPacket(SendRenderContextPacket(renderContext));
       }
 
       final int elapsed = DateTime.now().millisecondsSinceEpoch - start;
       final int remaining = frameTime - elapsed;
+
+      if(painted) _log("Tempo de construção: ${elapsed}ms");
 
       if(remaining > 0) await Future.delayed(Duration(milliseconds: remaining));
       _isFirstBuild = false;

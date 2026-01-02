@@ -12,8 +12,6 @@ dependencies:
 
   nexum_core:
     path: framework/nexum-core
-  nexum_widgets:
-    path: framework/nexum-widgets
 
 dev_dependencies:
   lints: ^6.0.0

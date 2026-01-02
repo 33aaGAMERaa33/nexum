@@ -12,8 +12,8 @@ class PacketDeserializerService {
   const PacketDeserializerService._();
 
   static Packet deserializePacket(FriendlyBuffer friendlyBuffer) {
-    final String identifier = friendlyBuffer.read("identifier");
-    final String uuid = friendlyBuffer.read("packet_uuid");
+    final String identifier = friendlyBuffer.readString();
+    final String uuid = friendlyBuffer.readString();
 
     final PacketDeserializer ? packetDeserializer = PacketDeserializerRegistry.instance.get(identifier);
 

@@ -14,19 +14,19 @@ class RenderContextSerializer extends HelperSerializer<RenderContext> {
 
   @override
   void serialize(RenderContext object, FriendlyBuffer friendlyBuffer) {
+    friendlyBuffer.writeInt(object.instructions.length);
+
     for(final RenderInstruction renderInstruction in object.instructions) {
       HelperSerializerService.instance.serializeObject(renderInstruction, friendlyBuffer);
     }
-
-    friendlyBuffer.writeInt(object.instructions.length);
   }
 }
 
 class ClipRectInstructionSerializer extends HelperSerializer<ClipRectInstruction> {
   @override
   void serialize(ClipRectInstruction object, FriendlyBuffer friendlyBuffer) {
-    HelperSerializerService.instance.serializeObject(object.size, friendlyBuffer);
     HelperSerializerService.instance.serializeObject(object.offset, friendlyBuffer);
+    HelperSerializerService.instance.serializeObject(object.size, friendlyBuffer);
   }
 
   @override

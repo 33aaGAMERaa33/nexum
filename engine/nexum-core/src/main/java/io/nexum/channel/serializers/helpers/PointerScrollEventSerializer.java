@@ -9,9 +9,9 @@ import org.jetbrains.annotations.NotNull;
 public class PointerScrollEventSerializer implements HelperSerializer<PointerScrollEvent> {
     @Override
     public void serialize(@NotNull PointerScrollEvent object, @NotNull FriendlyBuffer friendlyBuffer) {
+        HelperSerializerService.getInstance().serialize(object.getPosition(), friendlyBuffer);
         friendlyBuffer.writeInt(object.getScrollModifier());
         friendlyBuffer.writeInt(object.getScrollAmount());
-        HelperSerializerService.getInstance().serialize(object.getPosition(), friendlyBuffer);
     }
 
     @Override

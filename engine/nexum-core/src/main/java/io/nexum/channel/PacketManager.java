@@ -49,7 +49,7 @@ public class PacketManager {
         HelperDeserializerRegistry.getInstance().register(new SetColorInstructionDeserializer());
         HelperDeserializerRegistry.getInstance().register(new DrawStringInstructionDeserializer());
         HelperDeserializerRegistry.getInstance().register(new CreateGraphicsInstructionDeserializer());
-        HelperDeserializerRegistry.getInstance().register(new GraphicsInstructionsConsumerDeserializer());
+        HelperDeserializerRegistry.getInstance().register(new RenderInstructionsConsumerDeserializer());
 
         PacketHandlerRegistry.getInstance().register(new TestPacketHandler());
         PacketHandlerRegistry.getInstance().register(new HeartBeatPacketHandler());
@@ -74,9 +74,7 @@ public class PacketManager {
         PacketDeserializerRegistry.getInstance().register(new RequestTextMetricsPacketDeserializer());
     }
 
-    public void handleReceivedData(@NotNull String data) {
-        final FriendlyBuffer friendlyBuffer = FriendlyBuffer.fromData(data);
-
+    public void handleReceivedData(@NotNull FriendlyBuffer friendlyBuffer) {
         try {
             final Packet packet = PacketDeserializerService.getInstance().deserializePacket(friendlyBuffer);
             assert packet.getUUID() != null;
@@ -106,7 +104,7 @@ public class PacketManager {
 
         try {
             final FriendlyBuffer packetSerialized = PacketSerializerService.getInstance().serializePacket(packet);
-            channel.send(packetSerialized.buildData());
+            channel.send(packetSerialized.toBytes());
         }catch(PacketSerializationException exception) {
             this.warn(exception.getMessage());
         }

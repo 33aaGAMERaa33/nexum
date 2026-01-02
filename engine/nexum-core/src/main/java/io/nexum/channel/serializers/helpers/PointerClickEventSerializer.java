@@ -10,7 +10,7 @@ public class PointerClickEventSerializer implements HelperSerializer<PointerClic
     @Override
     public void serialize(@NotNull PointerClickEvent object, @NotNull FriendlyBuffer friendlyBuffer) {
         HelperSerializerService.getInstance().serialize(object.getPosition(), friendlyBuffer);
-        friendlyBuffer.writeBoolean(object.isReleased());
+        friendlyBuffer.writeBool(object.isReleased());
     }
 
     @Override

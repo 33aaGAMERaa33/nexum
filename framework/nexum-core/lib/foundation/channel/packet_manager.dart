@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:io';
 
 import 'package:nexum_core/foundation/channel/packet.dart';
-import 'package:nexum_core/foundation/channel/packets/foundation.dart';
 import 'package:nexum_core/foundation/channel/serializers/foundation.dart';
 import 'package:nexum_core/foundation/channel/serializers/metrics.dart';
 import 'package:nexum_core/foundation/channel/serializers/sync.dart';
@@ -93,9 +91,7 @@ class PacketManager {
 
   static PacketManager initialize() => _instance = PacketManager._();
 
-  void handleReceivedData(String data) {
-    final FriendlyBuffer friendlyBuffer = FriendlyBuffer.fromData(data);
-
+  void handleReceivedData(FriendlyBuffer friendlyBuffer) {
     try {
       final Packet packetDeserialized = PacketDeserializerService.deserializePacket(friendlyBuffer);
       final _WaitingPacket ? waitingResponse = _waitingResponseHandlers.remove(packetDeserialized.uuid!);
@@ -132,7 +128,7 @@ class PacketManager {
     final Channel channel = Channel.instance;
     final FriendlyBuffer packetSerialized = PacketSerializerService.instance.serializePacket(packet);
 
-    channel.send(packetSerialized.getData());
+    channel.send(packetSerialized.toBytes());
   }
 
   void sendResponsePacket<T extends Packet, R extends Packet>({

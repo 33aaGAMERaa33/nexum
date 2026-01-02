@@ -19,7 +19,7 @@ class HelperSerializerService {
       );
     }
 
+    friendlyBuffer.writeString(helperSerializer.identifier);
     helperSerializer.serialize(object, friendlyBuffer);
-    friendlyBuffer.write("identifier", helperSerializer.identifier);
   }
 }

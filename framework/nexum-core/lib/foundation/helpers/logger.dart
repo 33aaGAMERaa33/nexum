@@ -1,28 +1,40 @@
-import '../channel/packet_manager.dart';
-import '../channel/packets/foundation.dart';
+import 'dart:io';
+
+enum LoggerType {
+  log,
+  debug,
+  warn,
+  error,
+}
 
 class Logger {
   const Logger._();
 
-  static void _print(LoggerType type, String identifier, String message) {
-    PacketManager.instance.sendPacket(LoggerPacket(
-        identifier: identifier, log: message, type: type,
-    ));
+  static void _print(
+      LoggerType type,
+      String identifier,
+      String message,
+  ) {
+    final now = DateTime.now();
+
+    final timestamp = now.toIso8601String().replaceFirst('T', ' ').substring(0, 23);
+
+    stderr.writeln('[$timestamp] [${type.name.toUpperCase()}] [Framework/$identifier] - $message');
   }
 
-  static void log(String identifier, String log) {
-    _print(LoggerType.log, identifier, log);
+  static void log(String identifier, String message) {
+    _print(LoggerType.log, identifier, message);
   }
 
-  static void debug(String identifier, String log) {
-    _print(LoggerType.debug, identifier, log);
+  static void debug(String identifier, String message) {
+    _print(LoggerType.debug, identifier, message);
   }
 
-  static void warn(String identifier, String log) {
-    _print(LoggerType.warn, identifier, log);
+  static void warn(String identifier, String message) {
+    _print(LoggerType.warn, identifier, message);
   }
 
-  static void error(String identifier, String log) {
-    _print(LoggerType.error, identifier, log);
+  static void error(String identifier, String message) {
+    _print(LoggerType.error, identifier, message);
   }
 }

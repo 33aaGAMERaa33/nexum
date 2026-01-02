@@ -21,6 +21,6 @@ class PaintRectCommand extends PaintCommand {
     renderContext.clipRect(Offset.zero(), size);
 
     renderContext.setColor(color);
-    renderContext.drawRect(Offset.zero(), size);
+    renderContext.drawRect(size);
   }
 }

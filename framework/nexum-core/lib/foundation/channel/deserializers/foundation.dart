@@ -24,8 +24,8 @@ class EventPacketDeserializer extends PacketDeserializer<EventPacket> {
 class PointerClickEventDeserializer extends HelperDeserializer<PointerClickEvent> {
   @override
   PointerClickEvent deserialize(FriendlyBuffer friendlyBuffer) {
-    final bool released = friendlyBuffer.readBoolean();
     final Offset position = HelperDeserializerService.instance.deserializeObject(friendlyBuffer);
+    final bool released = friendlyBuffer.readBool();
 
     return PointerClickEvent(position, released);
   }
@@ -55,8 +55,8 @@ class PointerScrollEventDeserializer extends HelperDeserializer<PointerScrollEve
   @override
   PointerScrollEvent deserialize(FriendlyBuffer friendlyBuffer) {
     final Offset position = HelperDeserializerService.instance.deserializeObject(friendlyBuffer);
-    final int scrollAmount = friendlyBuffer.readInt();
     final int scrollModifier = friendlyBuffer.readInt();
+    final int scrollAmount = friendlyBuffer.readInt();
 
     return PointerScrollEvent(
       scrollModifier: scrollModifier,

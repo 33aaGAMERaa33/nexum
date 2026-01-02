@@ -11,8 +11,7 @@ class HelperDeserializerService {
   const HelperDeserializerService._();
 
   T deserializeObject<T>(FriendlyBuffer friendlyBuffer) {
-    final String identifier = friendlyBuffer.read("identifier");
-
+    final String identifier = friendlyBuffer.readString();
     final HelperDeserializer ? helperDeserializer = HelperDeserializerRegistry.instance.get(identifier);
 
     if(helperDeserializer == null) {

@@ -17,9 +17,9 @@ class HeartBeatPacketSerializer extends PacketSerializer<HeartBeatPacket> {
 class LoggerPacketSerializer extends PacketSerializer<LoggerPacket> {
   @override
   void serialize(LoggerPacket packet, FriendlyBuffer friendlyBuffer) {
-    friendlyBuffer.writeString(packet.log);
-    friendlyBuffer.writeString(packet.identifier);
     friendlyBuffer.writeString(packet.type.identifier);
+    friendlyBuffer.writeString(packet.identifier);
+    friendlyBuffer.writeString(packet.log);
   }
 
   @override

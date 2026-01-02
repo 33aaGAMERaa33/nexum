@@ -4,4 +4,12 @@ class Font {
   const Font({
     required this.fontSize,
   });
+
+  @override
+  bool operator ==(Object other) {
+    return other is Font && other.fontSize == fontSize;
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, fontSize);
 }

@@ -9,9 +9,9 @@ import java.awt.*;
 public class ColorDeserializer implements HelperDeserializer<Color> {
     @Override
     public @NotNull Color deserialize(@NotNull FriendlyBuffer friendlyBuffer) {
-        final int blue = friendlyBuffer.readInt();
-        final int green = friendlyBuffer.readInt();
         final int red = friendlyBuffer.readInt();
+        final int green = friendlyBuffer.readInt();
+        final int blue = friendlyBuffer.readInt();
 
         return new Color(red, green, blue);
     }
