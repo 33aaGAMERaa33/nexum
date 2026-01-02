@@ -18,7 +18,7 @@ class Example extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> childrens = [];
 
-    for(int i = 1; i <= 100; i++) {
+    for(int i = 1; i <= 1000; i++) {
       childrens.add(DebugBox(
         child: SizedBox(
           width: 100,

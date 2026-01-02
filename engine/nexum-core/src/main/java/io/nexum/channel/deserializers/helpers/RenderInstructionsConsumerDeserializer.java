@@ -23,7 +23,7 @@ public class RenderInstructionsConsumerDeserializer implements HelperDeserialize
 
     @Override
     public @NotNull String getIdentifier() {
-        return "graphics";
+        return "render_context";
     }
 
     @Override

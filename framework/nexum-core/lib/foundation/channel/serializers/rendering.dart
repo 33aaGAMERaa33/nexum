@@ -5,23 +5,6 @@ import '../helper_serializer.dart';
 import '../packet_serializer.dart';
 import '../packets/rendering.dart';
 
-class RenderContextSerializer extends HelperSerializer<RenderContext> {
-  @override
-  String get identifier => "graphics";
-
-  @override
-  Type get objectType => RenderContext;
-
-  @override
-  void serialize(RenderContext object, FriendlyBuffer friendlyBuffer) {
-    friendlyBuffer.writeInt(object.instructions.length);
-
-    for(final RenderInstruction renderInstruction in object.instructions) {
-      HelperSerializerService.instance.serializeObject(renderInstruction, friendlyBuffer);
-    }
-  }
-}
-
 class ClipRectInstructionSerializer extends HelperSerializer<ClipRectInstruction> {
   @override
   void serialize(ClipRectInstruction object, FriendlyBuffer friendlyBuffer) {
@@ -138,6 +121,24 @@ class SetCompositeInstructionSerializer extends HelperSerializer<SetCompositeIns
 
   @override
   Type get objectType => SetCompositeInstruction;
+}
+
+
+class RenderContextSerializer extends HelperSerializer<RenderContext> {
+  @override
+  String get identifier => "render_context";
+
+  @override
+  Type get objectType => RenderContext;
+
+  @override
+  void serialize(RenderContext object, FriendlyBuffer friendlyBuffer) {
+    friendlyBuffer.writeInt(object.instructions.length);
+
+    for(final RenderInstruction renderInstruction in object.instructions) {
+      HelperSerializerService.instance.serializeObject(renderInstruction, friendlyBuffer);
+    }
+  }
 }
 
 class SendRenderContextPacketSerializer extends PacketSerializer<SendRenderContextPacket>{

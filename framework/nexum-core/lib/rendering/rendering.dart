@@ -8,14 +8,6 @@ abstract class RenderInstruction {
 
 }
 
-abstract class DrawInstruction extends RenderInstruction {
-
-}
-
-abstract class TransformInstruction extends RenderInstruction {
-
-}
-
 abstract class CreateContextInstruction extends RenderInstruction {
   final RenderContext _renderContext;
   CreateContextInstruction(this._renderContext);
@@ -82,7 +74,7 @@ class DrawRectInstruction extends RenderInstruction {
   int get hashCode => Object.hash(runtimeType, size);
 }
 
-class TranslateInstruction extends TransformInstruction {
+class TranslateInstruction extends RenderInstruction {
   final Offset offset;
   TranslateInstruction(this.offset);
 
@@ -95,7 +87,7 @@ class TranslateInstruction extends TransformInstruction {
   int get hashCode => Object.hash(runtimeType, offset);
 }
 
-class SetFontInstruction extends TransformInstruction {
+class SetFontInstruction extends RenderInstruction {
   final Font font;
   SetFontInstruction(this.font);
 
@@ -108,7 +100,7 @@ class SetFontInstruction extends TransformInstruction {
   int get hashCode => Object.hash(runtimeType, font);
 }
 
-class SetColorInstruction extends TransformInstruction {
+class SetColorInstruction extends RenderInstruction {
   final Color color;
   SetColorInstruction(this.color);
 
@@ -121,7 +113,7 @@ class SetColorInstruction extends TransformInstruction {
   int get hashCode => Object.hash(runtimeType, color);
 }
 
-class SetCompositeInstruction extends TransformInstruction {
+class SetCompositeInstruction extends RenderInstruction {
   final double alpha;
   SetCompositeInstruction(this.alpha);
 
@@ -136,25 +128,26 @@ class SetCompositeInstruction extends TransformInstruction {
 
 class RenderContext {
   static const _eq = ListEquality();
-
+  
+  final RenderContext ? _parent;
   final List<RenderInstruction> _instructions = [];
-  final List<DrawInstruction> _drawInstructions = [];
-  final List<TransformInstruction> _transformInstructions = [];
+  
+  RenderContext() : _parent = null;
+  
+  RenderContext._(RenderContext parent) : _parent = parent;
 
   List<RenderInstruction> get instructions => _instructions;
 
   void _addInstruction(RenderInstruction instruction) {
     if(_instructions.contains(instruction)) return;
     _instructions.add(instruction);
-
-    print(instruction);
-
-    if(instruction is DrawInstruction) _drawInstructions.add(instruction);
-    else if(instruction is TransformInstruction) _transformInstructions.add(instruction);
   }
 
   RenderContext create() {
-    return RenderContext();
+    final RenderContext renderContext = RenderContext._(this);
+    _addInstruction(CreateSubContextInstruction(renderContext));
+
+    return renderContext;
   }
 
   RenderContext createScoped(Offset offset, Size size) {
@@ -173,7 +166,6 @@ class RenderContext {
   void drawString(String string) => _addInstruction(DrawStringInstruction(string));
   void setComposite(double alpha) => _addInstruction(SetCompositeInstruction(alpha));
   void clipRect(Offset offset, Size size) => _addInstruction(ClipRectInstruction(offset, size));
-  void drawWithContext(RenderContext renderContext) => _addInstruction(CreateSubContextInstruction(renderContext));
 
   @override
   bool operator ==(Object other) {

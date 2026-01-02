@@ -39,8 +39,6 @@ class PaintContext implements PaintCommandRecorder {
     for(final PaintCommand paintCommand in paintCommands) {
       final RenderContext subContext = renderContext.create();
       paintCommand.paint(subContext);
-
-      renderContext.drawWithContext(subContext);
     }
   }
 
@@ -69,8 +67,6 @@ class PaintSingleChildCommand extends PaintCommand {
 
     final RenderContext subContext = renderContext.create();
     child?.paint(subContext);
-
-    renderContext.drawWithContext(subContext);
   }
 }
 
@@ -93,32 +89,6 @@ class PaintMultiChildCommand extends PaintCommand {
     for(final PaintCommand child in childrens) {
       final RenderContext childContext = subContext.create();
       child.paint(childContext);
-
-      subContext.drawWithContext(childContext);
     }
-
-    renderContext.drawWithContext(subContext);
-  }
-}
-
-class PaintBySubRenderContext extends PaintCommand {
-  final RenderContext renderContext;
-
-  PaintBySubRenderContext({
-    required super.owner,
-    required super.size,
-    required super.offset,
-    required this.renderContext,
-  });
-
-  @override
-  void paint(RenderContext renderContext) {
-    renderContext.translate(offset);
-    renderContext.clipRect(Offset.zero(), size);
-
-    final RenderContext subContext = renderContext.create();
-    subContext.instructions.addAll(this.renderContext.instructions);
-
-    renderContext.drawWithContext(subContext);
   }
 }
