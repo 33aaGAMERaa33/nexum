@@ -3,7 +3,7 @@ package io.nexum.events;
 import io.nexum.models.Offset;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class PointerEvent extends Event {
+public abstract class PointerEvent extends InputEvent {
     private final @NotNull Offset position;
 
     public PointerEvent(@NotNull Offset position) {

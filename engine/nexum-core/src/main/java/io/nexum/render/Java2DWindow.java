@@ -1,9 +1,10 @@
-package io.nexum.bootstrap;
+package io.nexum.render;
 
 
 import io.nexum.Nexum;
 import io.nexum.channel.Channel;
 import io.nexum.channel.PacketManager;
+import io.nexum.events.KeyboardInputEvent;
 import io.nexum.events.PointerClickEvent;
 import io.nexum.events.PointerMoveEvent;
 import io.nexum.events.PointerScrollEvent;
@@ -13,17 +14,14 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class NexumWindow extends JFrame {
+public class Java2DWindow extends JFrame {
     private final BufferedImage frame;
     private final RenderPanel panel;
 
-    public NexumWindow(@NotNull Size screenSize) {
+    public Java2DWindow(@NotNull Size screenSize) {
         this.panel = new RenderPanel();
 
         this.frame = new BufferedImage(
@@ -47,6 +45,11 @@ public class NexumWindow extends JFrame {
         this.setVisible(true);
     }
 
+    public void prepare(@NotNull Nexum nexum) {
+        nexum.setRenderContext(new Java2DRenderContext(this.getFrame()));
+        nexum.setOnRender(this::repaint);
+    }
+
     @Override
     public void repaint() {
         super.repaint();
@@ -59,6 +62,30 @@ public class NexumWindow extends JFrame {
 
     private class RenderPanel extends JPanel {
         public RenderPanel() {
+            this.setFocusable(true);
+
+            this.addKeyListener(new KeyListener() {
+                private void onKey(KeyEvent event, boolean released) {
+                    if(!canEmitEvent()) return;
+                    Nexum.getInstance().emitEvent(new KeyboardInputEvent(event.getKeyCode(), released));
+                }
+
+                @Override
+                public void keyPressed(KeyEvent event) {
+                    this.onKey(event, false);
+                }
+
+                @Override
+                public void keyReleased(KeyEvent event) {
+                    this.onKey(event, true);
+                }
+
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+                }
+            });
+
             this.addMouseListener(new MouseAdapter() {
                 private void onMouse(MouseEvent e, boolean released) {
                     if(!canEmitEvent()) return;

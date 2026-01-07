@@ -1,7 +1,7 @@
 import '../../../painting/geometry.dart';
 import '../../../services/helper_deserializer_service.dart';
 import '../../events/event.dart';
-import '../../events/pointer_events.dart';
+import '../../events/input_events.dart';
 import '../friendly_buffer.dart';
 import '../helper_deserializer.dart';
 import '../packet_deserializer.dart';
@@ -19,6 +19,23 @@ class EventPacketDeserializer extends PacketDeserializer<EventPacket> {
 
   @override
   Type get packetType => EventPacket;
+}
+
+class KeyboardInputEventDeserializer extends HelperDeserializer<KeyboardInputEvent> {
+  @override
+  KeyboardInputEvent deserialize(FriendlyBuffer friendlyBuffer) {
+    final int keyCode = friendlyBuffer.readInt();
+    final bool released = friendlyBuffer.readBool();
+
+    return KeyboardInputEvent(keyCode, released);
+  }
+
+  @override
+  String get identifier => "keyboard";
+
+  @override
+  Type get objectType => KeyboardInputEvent;
+
 }
 
 class PointerClickEventDeserializer extends HelperDeserializer<PointerClickEvent> {

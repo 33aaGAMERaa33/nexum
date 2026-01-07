@@ -31,6 +31,7 @@ public class PacketManager {
         HelperSerializerRegistry.getInstance().register(new SizeSerializer());
         HelperSerializerRegistry.getInstance().register(new TestObjectSerializer());
         HelperSerializerRegistry.getInstance().register(new TextMetricsSerializer());
+        HelperSerializerRegistry.getInstance().register(new KeyboardInputEventSerializer());
         HelperSerializerRegistry.getInstance().register(new PointerMoveEventSerializer());
         HelperSerializerRegistry.getInstance().register(new PointerScrollEventSerializer());
         HelperSerializerRegistry.getInstance().register(new PointerClickEventSerializer());
@@ -54,7 +55,6 @@ public class PacketManager {
 
         PacketHandlerRegistry.getInstance().register(new TestPacketHandler());
         PacketHandlerRegistry.getInstance().register(new HeartBeatPacketHandler());
-        PacketHandlerRegistry.getInstance().register(new LoggerPacketHandler());
         PacketHandlerRegistry.getInstance().register(new SendGraphicsPacketHandler());
         PacketHandlerRegistry.getInstance().register(new SendGraphicsPacketHandler());
         PacketHandlerRegistry.getInstance().register(new RequestDataSyncPacketHandler());
@@ -68,7 +68,6 @@ public class PacketManager {
         PacketSerializerRegistry.getInstance().register(new SendTextMetricsPacketSerializer());
 
         PacketDeserializerRegistry.getInstance().register(new HeartBeatPacketDeserializer());
-        PacketDeserializerRegistry.getInstance().register(new LoggerPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new TestPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new SendRenderContextPacketDeserializer());
         PacketDeserializerRegistry.getInstance().register(new RequestDataSyncPacketDeserializer());

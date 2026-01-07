@@ -65,6 +65,7 @@ class PacketManager {
 
     HelperDeserializerRegistry.instance.register(TextMetricsDeserializer());
 
+    HelperDeserializerRegistry.instance.register(KeyboardInputEventDeserializer());
     HelperDeserializerRegistry.instance.register(PointerMoveEventDeserializer());
     HelperDeserializerRegistry.instance.register(PointerClickEventDeserializer());
     HelperDeserializerRegistry.instance.register(PointerScrollEventDeserializer());

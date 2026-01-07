@@ -1,5 +1,5 @@
 import '../../foundation/events/event.dart';
-import '../../foundation/events/pointer_events.dart';
+import '../../foundation/events/input_events.dart';
 import '../object.dart';
 
 mixin OnScroll on RenderObject {

@@ -15,8 +15,10 @@ class SyncDataPacketDeserializer extends PacketDeserializer<SyncDataPacket> {
     final double width = friendlyBuffer.readInt().toDouble();
     final double height = friendlyBuffer.readInt().toDouble();
     final int fpsLimit = friendlyBuffer.readInt();
+    final bool release = friendlyBuffer.readBool();
 
     return SyncDataPacket(
+      release: release,
       fpsLimit: fpsLimit,
       screenSize: Size(width: width, height: height),
     );

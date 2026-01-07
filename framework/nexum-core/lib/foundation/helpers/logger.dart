@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:nexum_core/nexum.dart';
+
 enum LoggerType {
   log,
   debug,
@@ -15,6 +17,7 @@ class Logger {
       String identifier,
       String message,
   ) {
+    if(!Nexum.initialized || Nexum.instance.release) return;
     final now = DateTime.now();
 
     final timestamp = now.toIso8601String().replaceFirst('T', ' ').substring(0, 23);

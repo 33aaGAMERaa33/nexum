@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:nexum_core/foundation/events/input_events.dart';
+
+import '../../foundation/events/event.dart';
 import '../object.dart';
 
 mixin SingleChildRenderObject on RenderObject {
@@ -8,6 +13,20 @@ mixin SingleChildRenderObject on RenderObject {
     super.update();
     child?.markNeedsPaint();
     child?.markNeedsLayout();
+  }
+
+  @override
+  void propagateEvent<T extends Event>(T event) {
+    if(child == null) return;
+    if(event is! PointerEvent) {
+      child!.propagateEvent(event);
+      return;
+    }
+
+
+    if(child!.hitTest(event.position)) {
+      child!.propagateEvent(event);
+    }
   }
 
   @override

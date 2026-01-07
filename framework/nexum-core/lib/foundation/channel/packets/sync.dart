@@ -7,9 +7,11 @@ class RequestDataSyncPacket extends Packet {
 
 class SyncDataPacket extends Packet {
   final int fpsLimit;
+  final bool release;
   final Size screenSize;
 
   SyncDataPacket({
+    required this.release,
     required this.fpsLimit,
     required this.screenSize,
   });

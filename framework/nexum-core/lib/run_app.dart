@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:nexum_core/foundation/helpers/logger.dart';
 import 'package:nexum_core/widgets/framework.dart';
@@ -27,6 +26,7 @@ void runApp(Widget widget) async {
     final SyncDataPacket response = await packetManager.sendPacketAndWaitResponse(RequestDataSyncPacket());
 
     final Nexum nexum = Nexum.initialize(
+      release: response.release,
       fpsLimit: response.fpsLimit,
       screenSize: response.screenSize,
     );

@@ -1,14 +1,17 @@
-import '../../foundation/types/void_callback.dart';
+import 'package:nexum_core/foundation/events/input_events.dart';
+
 import '../../painting/geometry.dart';
 import '../box.dart';
 import '../helpers/get_child_paint_command.dart';
-import '../mixins/on_pointer_tap.dart';
+import '../mixins/on_input.dart';
 import '../mixins/single_child_render_object.dart';
 import '../painting.dart';
 
-class RenderGestureDetector extends RenderBox with SingleChildRenderObject, OnPointerTap {
-  VoidCallback onTapCallback;
-  RenderGestureDetector(this.onTapCallback);
+typedef InputHandle = void Function(InputEvent event);
+
+class RenderInputDetector extends RenderBox with SingleChildRenderObject, OnPointerTap {
+  InputHandle callback;
+  RenderInputDetector(this.callback);
 
   @override
   void paint(PaintCommandRecorder paintRecorder, Offset offset) {
@@ -42,8 +45,8 @@ class RenderGestureDetector extends RenderBox with SingleChildRenderObject, OnPo
   Future<void> prepareLayout() => child.prepareLayout();
 
   @override
-  void onTap() {
-    onTapCallback.call();
+  void onInput(InputEvent event) {
+    callback.call(event);
   }
 
   @override

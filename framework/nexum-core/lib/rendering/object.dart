@@ -3,13 +3,8 @@ import 'package:nexum_core/nexum.dart';
 import 'package:nexum_core/rendering/painting.dart';
 
 import '../foundation/events/event.dart';
-import '../foundation/events/pointer_events.dart';
-import '../material/max_int.dart';
 import '../painting/geometry.dart';
 import '../widgets/framework.dart';
-import 'mixins/multi_child_render_object.dart';
-import 'mixins/single_child_render_object.dart';
-
 class Constraints {
   final double minWidth;
   final double maxWidth;
@@ -112,19 +107,7 @@ abstract class RenderObject {
 
   Future<void> prepareLayout();
 
-  void propagateEvent<T extends Event>(T event) {
-    if(event is PointerEvent) {
-      if(hitTest(event.position)) {
-        if(this is SingleChildRenderObject) {
-          (this as SingleChildRenderObject).child?.propagateEvent(event);
-        }else if(this is MultiChildRenderObject){
-          for(final RenderObject child in (this as MultiChildRenderObject).childrens) {
-            child.propagateEvent(event);
-          }
-        }
-      }
-    }
-  }
+  void propagateEvent<T extends Event>(T event);
 
   bool hitTest(Offset position);
 

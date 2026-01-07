@@ -1,3 +1,5 @@
+import '../../foundation/events/event.dart';
+import '../../foundation/events/input_events.dart';
 import '../object.dart';
 
 mixin MultiChildRenderObject on RenderObject {
@@ -29,5 +31,23 @@ mixin MultiChildRenderObject on RenderObject {
 
     childrens.removeAt(index);
     childrens.insert(index, newChild);
+  }
+
+  @override
+  void propagateEvent<T extends Event>(T event) {
+    if(event is! PointerEvent) {
+      for(final RenderObject child in childrens) {
+        child.propagateEvent(event);
+      }
+
+      return;
+    }
+
+
+    for(final RenderObject child in childrens) {
+      if(child.hitTest(event.position)) {
+        child.propagateEvent(event);
+      }
+    }
   }
 }

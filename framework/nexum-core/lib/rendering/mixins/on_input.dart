@@ -1,6 +1,6 @@
 
 import '../../foundation/events/event.dart';
-import '../../foundation/events/pointer_events.dart';
+import '../../foundation/events/input_events.dart';
 import '../object.dart';
 
 mixin OnPointerTap on RenderObject {
@@ -8,10 +8,10 @@ mixin OnPointerTap on RenderObject {
   void propagateEvent<T extends Event>(T event) {
     super.propagateEvent(event);
 
-    if(event is PointerClickEvent && hitTest(event.position) && !event.released) {
-      onTap();
+    if(event is InputEvent) {
+      onInput(event);
     }
   }
 
-  void onTap();
+  void onInput(InputEvent event);
 }

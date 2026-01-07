@@ -17,6 +17,7 @@ class Nexum {
   Size screenSize;
   late int fpsLimit;
   late int frameTime;
+  final bool release;
   Element ? _rootElement;
   bool _isRunning = false;
   bool _isFirstBuild = true;
@@ -37,6 +38,7 @@ class Nexum {
 
   Nexum._({
     required int fpsLimit,
+    required this.release,
     required this.screenSize,
   }) {
     this.fpsLimit = min(360, fpsLimit);
@@ -44,11 +46,16 @@ class Nexum {
   }
 
   static Nexum initialize({
+    required bool release,
     required int fpsLimit,
     required Size screenSize,
   }) {
     assert(_instance == null);
-    final Nexum nexum = Nexum._(fpsLimit: fpsLimit, screenSize: screenSize);
+    final Nexum nexum = Nexum._(
+      release: release,
+      fpsLimit: fpsLimit,
+      screenSize: screenSize
+    );
     _instance = nexum;
 
     return nexum;

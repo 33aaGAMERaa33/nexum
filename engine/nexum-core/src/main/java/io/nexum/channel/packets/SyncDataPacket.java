@@ -6,11 +6,21 @@ import org.jetbrains.annotations.NotNull;
 
 public class SyncDataPacket extends Packet {
     private final int fpsLimit;
+    private final boolean release;
     private final @NotNull Size screenSize;
 
-    public SyncDataPacket(int fpsLimit, @NotNull Size screenSize) {
+    public SyncDataPacket(
+            int fpsLimit,
+            boolean release,
+            @NotNull Size screenSize
+    ) {
+        this.release = release;
         this.fpsLimit = fpsLimit;
         this.screenSize = screenSize;
+    }
+
+    public boolean isRelease() {
+        return release;
     }
 
     public int getFpsLimit() {

@@ -9,8 +9,6 @@ class EventPacketHandler extends PacketHandler<EventPacket> {
   void handle(EventPacket packet) {
     if(!Nexum.initialized) return;
     Nexum.instance.propagateEvent(packet.event);
-
-    //Logger.log("EventPacketHandler", "Test");
   }
 
   @override

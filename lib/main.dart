@@ -1,39 +1,37 @@
+import 'package:nexum_core/foundation/events/input_events.dart';
 import 'package:nexum_core/run_app.dart';
 import 'package:nexum_core/widgets/align.dart';
-import 'package:nexum_core/widgets/debug_box.dart';
-import 'package:nexum_core/widgets/flex.dart';
 import 'package:nexum_core/widgets/framework.dart';
+import 'package:nexum_core/widgets/input_detector.dart';
 import 'package:nexum_core/widgets/rich_text.dart';
-import 'package:nexum_core/widgets/single_child_scroll_view.dart';
-import 'package:nexum_core/widgets/sized_box.dart';
 
 void main() {
-  runApp(const Example());
+  runApp(Example());
 }
 
-class Example extends StatelessWidget {
-  const Example({super.key});
+class Example extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => ExampleState();
+}
+
+class ExampleState extends State<Example> {
+  int ? keyCode;
+  PointerClickEvent ? pointerClickEvent;
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> childrens = [];
-
-    for(int i = 1; i <= 1_000; i++) {
-      childrens.add(DebugBox(
-        child: SizedBox(
-          width: 100,
-          height: 100,
-          child: Center(
-            child: RichText("Olá, Mundo $i!"),
-          )
-        ),
-      ));
-    }
-
     return Center(
-        child: SingleChildScrollView(
-          child: Column(childrens: childrens)
-        )
+      child: InputDetector(
+          onInput: (event) {
+            if(event is KeyboardInputEvent && !event.released) {
+              setState(() {
+                keyCode = event.keyCode;
+                pointerClickEvent = null;
+              });
+            }
+          },
+          child: RichText((keyCode ?? "Nenhum input detectado").toString())
+      )
     );
   }
 }
