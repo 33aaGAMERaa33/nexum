@@ -23,7 +23,6 @@ public class Nexum {
     private @Nullable Runnable onRender;
     private final @NotNull Size screenSize;
     private @Nullable RenderContext renderContext;
-    private @NotNull String frameworkPath = "../../";
 
     private static @Nullable Nexum instance;
     public static final Logger LOGGER = new Logger();
@@ -54,7 +53,7 @@ public class Nexum {
     }
 
     public void start() {
-        this.start(this.frameworkPath);
+        this.start("../../");
     }
 
     public void start(@NotNull String frameworkPath) {
