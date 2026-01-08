@@ -23,6 +23,7 @@ public class Nexum {
     private @Nullable Runnable onRender;
     private final @NotNull Size screenSize;
     private @Nullable RenderContext renderContext;
+    private @NotNull String frameworkPath = "../../";
 
     private static @Nullable Nexum instance;
     public static final Logger LOGGER = new Logger();
@@ -53,11 +54,17 @@ public class Nexum {
     }
 
     public void start() {
+        this.start(this.frameworkPath);
+    }
+
+    public void start(@NotNull String frameworkPath) {
         if(started) throw new RuntimeException("Já foi iniciado");
         started = true;
 
         try {
-            final FrameworkProcessStorage frameworkProcessStorage = FrameworkProcessStorage.initialize();
+            final FrameworkProcessStorage frameworkProcessStorage = FrameworkProcessStorage.initialize(
+                    frameworkPath
+            );
 
             final PacketManager packetManager = PacketManager.initialize();
 

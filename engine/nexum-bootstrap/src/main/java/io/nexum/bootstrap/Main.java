@@ -13,7 +13,7 @@ public class Main {
             final Java2DWindow window = new Java2DWindow(nexum.getScreenSize());
 
             window.prepare(nexum);
-            nexum.start();
+            nexum.start("../../");
         }catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("Boostrap", e.toString());

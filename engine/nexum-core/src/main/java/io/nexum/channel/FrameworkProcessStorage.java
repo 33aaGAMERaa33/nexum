@@ -65,12 +65,12 @@ public class FrameworkProcessStorage {
         return tempFile.toFile();
     }
 
-    public static FrameworkProcessStorage initialize() throws IOException {
+    public static FrameworkProcessStorage initialize(@NotNull String frameworkPath) throws IOException {
         if(instance != null) throw new AlreadyInitialized("FrameworkManager já foi inicializado");
 
         instance = new FrameworkProcessStorage(launch(
                 io.nexum.RunInfo.IS_RELEASE ? LauncherMode.RELEASE : LauncherMode.DEV,
-                new File("../../")
+                new File(frameworkPath)
         ));
 
         return instance;
